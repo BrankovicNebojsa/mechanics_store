@@ -2,7 +2,6 @@ package com.mechanics_store.service;
 
 import com.mechanics_store.model.Brand;
 import com.mechanics_store.repository.BrandRepository;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

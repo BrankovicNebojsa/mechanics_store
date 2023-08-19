@@ -8,7 +8,10 @@ public record UserDTO(
         String firstName,
         @NotBlank(message = "Last name must be filled")
         String lastName,
+        @NotBlank(message = "Email must be filled")
+        String email,
+        @NotBlank(message = "Phone number must be filled")
+        String phoneNumber,
         @NotBlank(message = "Username must be filled")
         String username) {
-
 }

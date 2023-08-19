@@ -30,50 +30,29 @@ import java.util.List;
 @Entity(name = "user")
 public class User implements UserDetails {
 
-    /**
-     * Auto generated identifier which is unique and it's used to identify an
-     * instance (row) in database
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    /**
-     * First name of a user
-     *
-     * Value can't be empty
-     */
     @NotBlank(message = "First name must be filled")
     private String firstName;
 
-    /**
-     * Last name of a user
-     *
-     * Value can't be empty
-     */
     @NotBlank(message = "Last name must be filled")
     private String lastName;
 
-    /**
-     * Username of a user
-     *
-     * It's a natural identifier which means his value can't be changed in
-     * database afterwards.
-     *
-     */
+    @NotBlank(message = "Email must be filled")
+    private String email;
+
+    @NotBlank(message = "Phone number must be filled")
+    private String phoneNumber;
+
     @NotBlank(message = "Username must be filled")
     @NaturalId
     private String username;
 
-    /**
-     * User's password which is hashed inside the database.
-     */
     @NotBlank(message = "Password must be filled")
     private String password;
 
-    /**
-     * Role that a user has in the system.
-     */
     @Enumerated(EnumType.STRING)
     private Role role;
 

@@ -13,6 +13,8 @@ public class UserMapper implements Mapper<User, UserDTO> {
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
+                user.getEmail(),
+                user.getPhoneNumber(),
                 user.getUsername()
         );
     }
@@ -27,6 +29,8 @@ public class UserMapper implements Mapper<User, UserDTO> {
                 .firstName(userDTO.firstName())
                 .lastName(userDTO.lastName())
                 .username(userDTO.username())
+                .email(userDTO.email())
+                .phoneNumber(userDTO.phoneNumber())
                 .build();
     }
 }
