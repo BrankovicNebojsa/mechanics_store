@@ -76,7 +76,9 @@ public class JsonLogger implements Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try (FileWriter fileWriter = new FileWriter(filePath, false)) {
+
+        try {
+            FileWriter fileWriter = new FileWriter(filePath, false);
             gson.toJson(logs, listType, fileWriter);
         } catch (IOException e) {
             error(e);

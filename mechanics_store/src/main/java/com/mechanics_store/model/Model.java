@@ -1,13 +1,15 @@
 package com.mechanics_store.model;
 
+import com.mechanics_store.controller.dto.BrandDTO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.validation.constraints.NotBlank;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -17,7 +19,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Represents entity in database called brand.
+ * Represents entity in database called model.
  *
  * @author Nebojsa Brankovic
  */
@@ -28,19 +30,24 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-@Entity(name = "brand")
-public class Brand {
+@Entity(name = "model")
+public class Model {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "brand_seq")
-    @SequenceGenerator(name = "brand_seq", sequenceName = "brand_seq", initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "model_seq")
+    @SequenceGenerator(name = "model_seq", sequenceName = "model_seq", initialValue = 1)
     private long id;
 
-    @NotBlank(message = "Name of a brand must be filled")
+    @NotBlank(message = "Name of a model must be filled")
     private String name;
 
-    public Brand(String name) {
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    private Brand brand;
+
+    public Model(String name, Brand brand) {
         this.name = name;
+        this.brand = brand;
     }
 
 }

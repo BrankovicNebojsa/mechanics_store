@@ -10,9 +10,9 @@ import org.springframework.security.core.GrantedAuthority;
 public enum Role implements GrantedAuthority {
 
     /**
-     * Regular user (client) with limited functionalities
+     * Client with limited functionalities
      */
-    USER,
+    CLIENT,
     /**
      * Worker that has all the functionalities
      */

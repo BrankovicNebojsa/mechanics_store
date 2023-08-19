@@ -26,8 +26,8 @@ public class AuthenticationService {
             case "WORKER":
                 role = Role.WORKER;
                 break;
-            case "USER":
-                role = Role.USER;
+            case "CLIENT":
+                role = Role.CLIENT;
                 break;
             default:
                 throw new EntityNotFoundException("Bad input for a user role");
