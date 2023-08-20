@@ -34,6 +34,10 @@ public class UserService {
         this.authService = authService;
     }
 
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -46,7 +50,7 @@ public class UserService {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("WORKER"));
     }
 
-    public User saveUser(User user) {
+    public User save(User user) {
         Optional<User> userFromDB = userRepository.findByUsername(user.getUsername());
         if (!userFromDB.isEmpty()) {
             return userFromDB.get();
@@ -57,12 +61,12 @@ public class UserService {
         return userRepository.findByUsername(user.getUsername()).get();
     }
 
-    public User updateUser(User user) {
+    public User update(User user) {
         userRepository.findById(user.getId()).ifPresent(userRepository::save);
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, Map<String, Object> fields) {
+    public User update(Long id, Map<String, Object> fields) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             fields.forEach((key, value) -> {

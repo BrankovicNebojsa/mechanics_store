@@ -59,10 +59,14 @@ public class CarService {
         if (car.getOwner() == null) {
             car.setOwner(userService.getCurrentUser());
         } else {
-            car.setOwner(userService.saveUser(car.getOwner()));
+            car.setOwner(userService.save(car.getOwner()));
         }
 
         return carRepository.save(car);
+    }
+
+    public Optional<Car> findByLicensePlate(String licensePlate) {
+        return carRepository.findByLicensePlate(licensePlate);
     }
 
     public List<Car> findAll() {
@@ -84,6 +88,9 @@ public class CarService {
     }
 
     public Color getColorFromColorName(String name) {
+        if (name == null) {
+            return null;
+        }
         Color color = null;
         switch (name.toUpperCase()) {
             case "BLACK":
@@ -129,6 +136,9 @@ public class CarService {
     }
 
     public Transmission getTransmissionFromTransmissionName(String name) {
+        if (name == null) {
+            return null;
+        }
         Transmission transmission = null;
         switch (name.toUpperCase()) {
             case "AUTOMATIC":

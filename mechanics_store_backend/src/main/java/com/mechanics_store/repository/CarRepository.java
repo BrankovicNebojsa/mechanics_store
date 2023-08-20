@@ -18,4 +18,6 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     public Optional<Car> findByEngine(Engine engine);
 
+    public Optional<Car> findByLicensePlate(String licensePlate);
+
 }

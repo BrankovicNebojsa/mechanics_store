@@ -46,7 +46,7 @@ public class Car {
     private String licensePlate;
 
     @NotNull
-    private int year;
+    private Integer year;
 
     @NotBlank
     private String engineNumber;
@@ -72,7 +72,7 @@ public class Car {
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner;
 
-    public Car(String licensePlate, int year, String engineNumber, String chassisNumber, Color color, Transmission transmission, Model model, Engine engine, User owner) {
+    public Car(String licensePlate, Integer year, String engineNumber, String chassisNumber, Color color, Transmission transmission, Model model, Engine engine, User owner) {
         this.licensePlate = licensePlate;
         this.year = year;
         this.engineNumber = engineNumber;

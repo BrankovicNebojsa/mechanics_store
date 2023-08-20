@@ -1,7 +1,6 @@
 package com.mechanics_store.controller.mapper;
 
 import com.mechanics_store.controller.dto.ModelDTO;
-import com.mechanics_store.model.Brand;
 import com.mechanics_store.model.Model;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +24,9 @@ public class ModelMapper implements Mapper<Model, ModelDTO> {
 
     @Override
     public Model DTOToEntity(ModelDTO modelDTO) {
-        return new Model(modelDTO.name(), new Brand(modelDTO.brand().name()));
+        if (modelDTO == null) {
+            return null;
+        }
+        return new Model(modelDTO.name(), brandMapper.DTOToEntity(modelDTO.brand()));
     }
 }

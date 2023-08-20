@@ -13,5 +13,10 @@ public record UserDTO(
         @NotBlank(message = "Phone number must be filled")
         String phoneNumber,
         @NotBlank(message = "Username must be filled")
-        String username) {
+        String username,
+        @NotBlank(message = "Password must be filled")
+        String password,
+        @NotBlank(message = "Role must be filled")
+        String role) {
+
 }

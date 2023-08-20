@@ -42,14 +42,13 @@ public class CarMapper implements Mapper<Car, CarDTO> {
 
     @Override
     public Car DTOToEntity(CarDTO carDTO) {
-        User user1 = null;
-        if (carDTO.owner() != null) {
-            user1 = new User(carDTO.owner().firstName(), carDTO.owner().lastName(), carDTO.owner().email(), carDTO.owner().phoneNumber(),
-                    carDTO.owner().email(), "123", Role.CLIENT);
-        }
+//        User user1 = null;
+//        if (carDTO.owner() != null) {
+//            user1 = new User(carDTO.owner().firstName(), carDTO.owner().lastName(), carDTO.owner().email(), carDTO.owner().phoneNumber(),
+//                    carDTO.owner().email(), "123", Role.CLIENT);
+//        }
         return new Car(carDTO.licensePlate(), carDTO.year(), carDTO.engineNumber(), carDTO.chassisNumber(),
                 carService.getColorFromColorName(carDTO.color()), carService.getTransmissionFromTransmissionName(carDTO.transmission()),
-                new Model(carDTO.model().name(), new Brand(carDTO.model().brand().name())),
-                new Engine(carDTO.engine().numberOfCylinders(), carDTO.engine().power(), carDTO.engine().capacity()), user1);
+                modelMapper.DTOToEntity(carDTO.model()), engineMapper.DTOToEntity(carDTO.engine()), userMapper.DTOToEntity(carDTO.owner()));
     }
 }

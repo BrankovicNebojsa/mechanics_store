@@ -1,6 +1,8 @@
 package com.mechanics_store.controller.mapper;
 
 import com.mechanics_store.controller.dto.UserDTO;
+import com.mechanics_store.exception.EntityNotFoundException;
+import com.mechanics_store.model.Role;
 import com.mechanics_store.model.User;
 import org.springframework.stereotype.Component;
 
@@ -15,22 +17,31 @@ public class UserMapper implements Mapper<User, UserDTO> {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
-                user.getUsername()
+                user.getUsername(),
+                user.getPassword(),
+                user.getRole().toString()
         );
     }
 
     @Override
     public User DTOToEntity(UserDTO userDTO) {
         if (userDTO == null) {
-            return new User();
+            return null;
         }
-        return User.builder()
-                .id(userDTO.id())
-                .firstName(userDTO.firstName())
-                .lastName(userDTO.lastName())
-                .username(userDTO.username())
-                .email(userDTO.email())
-                .phoneNumber(userDTO.phoneNumber())
-                .build();
+        Role role = null;
+        if (userDTO.role() != null) {
+            switch (userDTO.role().toUpperCase()) {
+                case "WORKER":
+                    role = Role.WORKER;
+                    break;
+                case "CLIENT":
+                    role = Role.CLIENT;
+                    break;
+                default:
+                    throw new EntityNotFoundException("Bad input for a role");
+            }
+        }
+        return new User(userDTO.firstName(), userDTO.lastName(), userDTO.email(),
+                userDTO.phoneNumber(), userDTO.username(), userDTO.password(), role);
     }
 }

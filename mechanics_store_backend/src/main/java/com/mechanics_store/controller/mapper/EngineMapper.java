@@ -18,6 +18,9 @@ public class EngineMapper implements Mapper<Engine, EngineDTO> {
 
     @Override
     public Engine DTOToEntity(EngineDTO engineDTO) {
+        if (engineDTO == null) {
+            return null;
+        }
         return new Engine(engineDTO.numberOfCylinders(), engineDTO.power(), engineDTO.capacity());
     }
 }
