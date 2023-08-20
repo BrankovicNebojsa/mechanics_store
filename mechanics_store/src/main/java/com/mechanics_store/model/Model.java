@@ -1,6 +1,5 @@
 package com.mechanics_store.model;
 
-import com.mechanics_store.controller.dto.BrandDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -31,6 +31,10 @@ public class EngineService {
         return engineRepository.findById(id);
     }
 
+    public Optional<Engine> findByAll(int numberOfCylinders, int power, double capacity) {
+        return engineRepository.findByNumberOfCylindersAndPowerAndCapacity(numberOfCylinders, power, capacity);
+    }
+    
     public List<Engine> findAll() {
         return engineRepository.findAll();
     }

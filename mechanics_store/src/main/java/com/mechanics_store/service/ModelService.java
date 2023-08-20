@@ -29,12 +29,22 @@ public class ModelService {
 
     public Model save(Model model) {
         Optional<Brand> brand = brandService.findByName(model.getBrand().getName());
-        if (brand.isEmpty()) {
-            brandService.save(model.getBrand());
+        if (brand == null || brand.isEmpty()) {
+            Brand brand2 = brandService.save(model.getBrand());
+            model.setBrand(brand2);
         } else {
             model.getBrand().setId(brand.get().getId());
         }
         return modelRepository.save(model);
+    }
+
+    public Optional<Model> findByModelNameAndBrandName(String modelName, String brandName) {
+        Optional<Brand> oBrand = brandService.findByName(brandName);
+        if (oBrand.isEmpty()) {
+            return null;
+        }
+        
+        return modelRepository.findByNameAndBrandId(modelName, oBrand.get().getId());
     }
 
     public List<Model> findAll() {

@@ -2,7 +2,9 @@ package com.mechanics_store.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import com.mechanics_store.model.Car;
 import com.mechanics_store.model.Engine;
+import com.mechanics_store.model.Model;
 import java.util.Optional;
 
 /**
@@ -10,8 +12,10 @@ import java.util.Optional;
  * @author Nebojsa Brankovic
  */
 @Repository
-public interface EngineRepository extends JpaRepository<Engine, Long> {
+public interface CarRepository extends JpaRepository<Car, Long> {
 
-    public Optional<Engine> findByNumberOfCylindersAndPowerAndCapacity(int numberOfCylinders, int power, double capacity);
+    public Optional<Car> findByModel(Model model);
+
+    public Optional<Car> findByEngine(Engine engine);
 
 }

@@ -12,6 +12,6 @@ import com.mechanics_store.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUsername(String username);
+    public Optional<User> findByUsername(String username);
 
 }
