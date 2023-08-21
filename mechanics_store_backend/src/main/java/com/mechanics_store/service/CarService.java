@@ -6,6 +6,7 @@ import com.mechanics_store.model.Color;
 import com.mechanics_store.model.Engine;
 import com.mechanics_store.model.Model;
 import com.mechanics_store.model.Transmission;
+import com.mechanics_store.model.User;
 import com.mechanics_store.repository.CarRepository;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +64,10 @@ public class CarService {
         }
 
         return carRepository.save(car);
+    }
+
+    public List<Car> findCarsOfOwner(User user) {
+        return carRepository.findAllByOwner(user);
     }
 
     public Optional<Car> findByLicensePlate(String licensePlate) {

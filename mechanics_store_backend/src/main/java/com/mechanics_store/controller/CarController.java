@@ -3,6 +3,7 @@ package com.mechanics_store.controller;
 import com.mechanics_store.controller.dto.CarDTO;
 import com.mechanics_store.controller.mapper.CarMapper;
 import com.mechanics_store.service.CarService;
+import com.mechanics_store.service.UserService;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,15 +28,22 @@ public class CarController {
 
     private final CarMapper carMapper;
 
+    private final UserService userService;
+
     @Autowired
-    public CarController(CarService carService, CarMapper carMapper) {
+    public CarController(CarService carService, CarMapper carMapper, UserService userService) {
         this.carService = carService;
         this.carMapper = carMapper;
+        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
-        return ResponseEntity.ok(carMapper.entitiesToDTOs(carService.findAll()));
+        if (userService.isCurrentUserAWorker()) {
+            return ResponseEntity.ok(carMapper.entitiesToDTOs(carService.findAll()));
+        } else {
+            return ResponseEntity.ok(carMapper.entitiesToDTOs(carService.findCarsOfOwner(userService.getCurrentUser())));
+        }
     }
 
     @PostMapping

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 /**
  * Contains business logic for a Reservation class
  *
- * Class that's used to control and manipulate data related to reservation class.
- * Enables creating, reading, updating and deleting a reservation.
+ * Class that's used to control and manipulate data related to reservation
+ * class. Enables creating, reading, updating and deleting a reservation.
  *
  * @author Nebojsa Brankovic
  */
@@ -57,6 +57,10 @@ public class ReservationService {
         }
 
         return reservationRepository.save(reservation);
+    }
+
+    public List<Reservation> findReservationsOfOwner(User user) {
+        return reservationRepository.findAllByCarOwner(user);
     }
 
     public List<Reservation> findAll() {

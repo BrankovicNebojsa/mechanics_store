@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 import com.mechanics_store.model.Car;
 import com.mechanics_store.model.Engine;
 import com.mechanics_store.model.Model;
+import com.mechanics_store.model.User;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,5 +21,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     public Optional<Car> findByEngine(Engine engine);
 
     public Optional<Car> findByLicensePlate(String licensePlate);
+
+    public List<Car> findAllByOwner(User user);
 
 }

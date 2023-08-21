@@ -3,6 +3,7 @@ package com.mechanics_store.controller;
 import com.mechanics_store.controller.dto.ReservationDTO;
 import com.mechanics_store.controller.mapper.ReservationMapper;
 import com.mechanics_store.service.ReservationService;
+import com.mechanics_store.service.UserService;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,15 +28,22 @@ public class ReservationController {
 
     private final ReservationMapper reservatopmMapper;
 
+    private final UserService userService;
+
     @Autowired
-    public ReservationController(ReservationService reservationService, ReservationMapper reservatopmMapper) {
+    public ReservationController(ReservationService reservationService, ReservationMapper reservatopmMapper, UserService userService) {
         this.reservationService = reservationService;
         this.reservatopmMapper = reservatopmMapper;
+        this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getAllReservations() {
-        return ResponseEntity.ok(reservatopmMapper.entitiesToDTOs(reservationService.findAll()));
+        if (userService.isCurrentUserAWorker()) {
+            return ResponseEntity.ok(reservatopmMapper.entitiesToDTOs(reservationService.findAll()));
+        } else {
+            return ResponseEntity.ok(reservatopmMapper.entitiesToDTOs(reservationService.findReservationsOfOwner(userService.getCurrentUser())));
+        }
     }
 
     @PostMapping
