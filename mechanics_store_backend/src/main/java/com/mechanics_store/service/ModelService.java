@@ -1,5 +1,6 @@
 package com.mechanics_store.service;
 
+import com.mechanics_store.exception.EntityAlreadyExistsException;
 import com.mechanics_store.model.Brand;
 import com.mechanics_store.model.Model;
 import com.mechanics_store.repository.ModelRepository;
@@ -35,7 +36,13 @@ public class ModelService {
         } else {
             model.getBrand().setId(brand.get().getId());
         }
-        return modelRepository.save(model);
+        Optional<Model> modelFromDB = modelRepository.findByNameAndBrandId(model.getName(), model.getBrand().getId());
+        if (modelFromDB == null || modelFromDB.isEmpty()) {
+            return modelRepository.save(model);
+        } else {
+            throw new EntityAlreadyExistsException("Model with that name already exists");
+        }
+
     }
 
     public Optional<Model> findByModelNameAndBrandName(String modelName, String brandName) {
@@ -43,7 +50,7 @@ public class ModelService {
         if (oBrand.isEmpty()) {
             return null;
         }
-        
+
         return modelRepository.findByNameAndBrandId(modelName, oBrand.get().getId());
     }
 

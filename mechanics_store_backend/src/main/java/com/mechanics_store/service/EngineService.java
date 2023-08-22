@@ -2,6 +2,7 @@ package com.mechanics_store.service;
 
 import com.mechanics_store.model.Engine;
 import com.mechanics_store.repository.EngineRepository;
+import jakarta.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,13 @@ public class EngineService {
     }
 
     public Engine save(Engine engine) {
-        return engineRepository.save(engine);
+        Optional<Engine> engineFromDB = engineRepository.findByNumberOfCylindersAndPowerAndCapacity(engine.getNumberOfCylinders(),
+                engine.getPower(), engine.getCapacity());
+        if (engineFromDB == null || engineFromDB.isEmpty()) {
+            return engineRepository.save(engine);
+        } else {
+            throw new EntityExistsException("Engine with that data already exists");
+        }
     }
 
     public Optional<Engine> findById(Long id) {
@@ -34,7 +41,7 @@ public class EngineService {
     public Optional<Engine> findByAll(int numberOfCylinders, int power, double capacity) {
         return engineRepository.findByNumberOfCylindersAndPowerAndCapacity(numberOfCylinders, power, capacity);
     }
-    
+
     public List<Engine> findAll() {
         return engineRepository.findAll();
     }

@@ -1,5 +1,6 @@
 package com.mechanics_store.service;
 
+import com.mechanics_store.exception.EntityAlreadyExistsException;
 import com.mechanics_store.model.Brand;
 import com.mechanics_store.repository.BrandRepository;
 import java.util.List;
@@ -24,7 +25,12 @@ public class BrandService {
     }
 
     public Brand save(Brand brand) {
-        return brandRepository.save(brand);
+        Optional<Brand> brandFromDB = brandRepository.findByName(brand.getName());
+        if (brandFromDB == null || brandFromDB.isEmpty()) {
+            return brandRepository.save(brand);
+        } else {
+            throw new EntityAlreadyExistsException("Brand with that name already exists");
+        }
     }
 
     public Optional<Brand> findById(Long id) {
