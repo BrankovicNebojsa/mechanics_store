@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,4 +53,8 @@ public class Reservation {
         this.mechanic = mechanic;
     }
 
+    public void setMechanic(User mechanic) {
+        this.mechanic = mechanic;
+    }
+    
 }

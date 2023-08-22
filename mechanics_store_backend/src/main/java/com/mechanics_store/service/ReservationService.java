@@ -48,11 +48,11 @@ public class ReservationService {
             if (mechanic == null || mechanic.isEmpty()) {
                 reservation.setMechanic(userService.save(reservation.getMechanic()));
             } else {
-                reservation.getMechanic().setId(mechanic.get().getId());
+                reservation.setMechanic(mechanic.get());
             }
         }
 
-        if (reservation.getMechanic().getRole().equals(Role.CLIENT)) {
+        if (reservation.getMechanic().getRole() != null && reservation.getMechanic().getRole().equals(Role.CLIENT)) {
             throw new IllegalArgumentException("Tried to assign a mechanic to a user whose role is Role.CLIENT");
         }
 
