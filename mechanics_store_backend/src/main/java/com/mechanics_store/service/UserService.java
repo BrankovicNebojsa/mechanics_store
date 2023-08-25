@@ -2,6 +2,7 @@ package com.mechanics_store.service;
 
 import com.mechanics_store.auth.AuthenticationService;
 import com.mechanics_store.auth.RegisterRequest;
+import com.mechanics_store.model.Role;
 import com.mechanics_store.model.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,6 +41,10 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public List<User> getAllMechanics() {
+        return userRepository.findAllByRole(Role.WORKER);
     }
 
     public User getCurrentUser() {

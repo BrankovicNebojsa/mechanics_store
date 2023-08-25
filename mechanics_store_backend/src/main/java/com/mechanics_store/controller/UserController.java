@@ -29,6 +29,11 @@ public class UserController {
         return ResponseEntity.ok(userMapper.entitiesToDTOs(userService.findAll()));
     }
 
+    @GetMapping("/mechanics")
+    public ResponseEntity<List<UserDTO>> getAllMechanics() {
+        return ResponseEntity.ok(userMapper.entitiesToDTOs(userService.getAllMechanics()));
+    }
+
     @GetMapping("/current")
     public ResponseEntity<UserDTO> getCurrentUser() {
         return ResponseEntity.ok(userMapper.entityToDTO(userService.getCurrentUser()));

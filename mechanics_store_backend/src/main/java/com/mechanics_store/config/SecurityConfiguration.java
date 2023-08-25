@@ -23,10 +23,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/v1/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("WORKER")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users").hasAuthority("WORKER")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/current").hasAuthority("WORKER")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/mechanics").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/brands/**").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/models/**").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/engines/**").hasAnyAuthority("CLIENT", "WORKER")

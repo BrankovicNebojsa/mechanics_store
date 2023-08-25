@@ -37,23 +37,9 @@ public class ReservationMapper implements Mapper<Reservation, ReservationDTO> {
 
     @Override
     public Reservation DTOToEntity(ReservationDTO reservationDTO) {
-//        User mechanic = null;
-//        if (reservationDTO.mechanic() != null) {
-//            mechanic = new User(reservationDTO.mechanic().firstName(), reservationDTO.mechanic().lastName(),
-//                    reservationDTO.mechanic().email(), reservationDTO.mechanic().phoneNumber(),
-//                    reservationDTO.mechanic().email(), "123", Role.CLIENT);
-//        } else {
-//            mechanic = userService.getCurrentUser();
-//        }
-//
-//        Car car = null;
-//        if (reservationDTO.car().chassisNumber() == null) {
-//            car = new Car();
-//            car.setLicensePlate(reservationDTO.car().licensePlate());
-//        } else {
-//            car = carService.findByLicensePlate(reservationDTO.car().licensePlate()).get();
-//        }
-
+        if (reservationDTO.date().length() < 16) {
+            throw new IllegalArgumentException("Date is not complete.");
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         Date date = null;
         try {
