@@ -18,7 +18,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 
 /**
@@ -32,7 +31,6 @@ import org.hibernate.annotations.NaturalId;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity(name = "car")
 public class Car {
 
@@ -82,6 +80,13 @@ public class Car {
         this.model = model;
         this.engine = engine;
         this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" + "id: " + this.id + ", licensePlate: " + this.licensePlate + ", year: " + this.year + ", engineNumber: " + this.engineNumber
+                + ", chassisNumber: " + this.chassisNumber + ", color: " + this.color + ", transmission: " + this.transmission + ", model {" + this.model
+                + " }, engine { " + this.engine.toString() + " }, owner {" + this.owner + " } }";
     }
 
 }

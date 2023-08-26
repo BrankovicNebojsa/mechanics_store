@@ -1,6 +1,7 @@
 package com.mechanics_store.service;
 
 import com.mechanics_store.exception.EntityNotFoundException;
+import com.mechanics_store.logging.Logger;
 import com.mechanics_store.model.Car;
 import com.mechanics_store.model.Color;
 import com.mechanics_store.model.Engine;
@@ -10,6 +11,7 @@ import com.mechanics_store.model.User;
 import com.mechanics_store.repository.CarRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,11 +33,15 @@ public class CarService {
 
     private final UserService userService;
 
-    public CarService(CarRepository carRepository, ModelService modelService, EngineService engineService, UserService userService) {
+    private final Logger logger;
+
+    @Autowired
+    public CarService(CarRepository carRepository, ModelService modelService, EngineService engineService, UserService userService, Logger logger) {
         this.carRepository = carRepository;
         this.modelService = modelService;
         this.engineService = engineService;
         this.userService = userService;
+        this.logger = logger;
     }
 
     public Car save(Car car) {
@@ -62,8 +68,15 @@ public class CarService {
         } else {
             car.setOwner(userService.save(car.getOwner()));
         }
-
-        return carRepository.save(car);
+        Car car2;
+        try {
+            car2 = carRepository.save(car);
+            logger.info("Saved a car: " + car.toString());
+        } catch (Exception e) {
+            logger.error(e);
+            throw e;
+        }
+        return car2;
     }
 
     public List<Car> findCarsOfOwner(User user) {

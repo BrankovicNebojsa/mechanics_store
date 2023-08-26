@@ -1,5 +1,6 @@
 package com.mechanics_store.service;
 
+import com.mechanics_store.logging.Logger;
 import com.mechanics_store.model.Car;
 import com.mechanics_store.model.Reservation;
 import com.mechanics_store.model.Role;
@@ -7,6 +8,7 @@ import com.mechanics_store.model.User;
 import com.mechanics_store.repository.ReservationRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,10 +28,14 @@ public class ReservationService {
 
     private final UserService userService;
 
-    public ReservationService(ReservationRepository reservationRepository, CarService carService, UserService userService) {
+    private final Logger logger;
+
+    @Autowired
+    public ReservationService(ReservationRepository reservationRepository, CarService carService, UserService userService, Logger logger) {
         this.reservationRepository = reservationRepository;
         this.carService = carService;
         this.userService = userService;
+        this.logger = logger;
     }
 
     public Reservation save(Reservation reservation) {
@@ -53,10 +59,19 @@ public class ReservationService {
         }
 
         if (reservation.getMechanic().getRole() != null && reservation.getMechanic().getRole().equals(Role.CLIENT)) {
-            throw new IllegalArgumentException("Tried to assign a mechanic to a user whose role is Role.CLIENT");
+            IllegalArgumentException e = new IllegalArgumentException("Tried to assign a mechanic to a user whose role is Role.CLIENT");
+            logger.error(e);
+            throw e;
         }
-
-        return reservationRepository.save(reservation);
+        Reservation reservation2;
+        try {
+            reservation2 = reservationRepository.save(reservation);
+            logger.info("Saved a reservation: " + reservation2);
+        } catch (Exception e) {
+            logger.error(e);
+            throw e;
+        }
+        return reservation2;
     }
 
     public List<Reservation> findReservationsOfOwner(User user) {

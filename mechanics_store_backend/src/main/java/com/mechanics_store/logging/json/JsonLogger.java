@@ -44,24 +44,21 @@ public class JsonLogger implements Logger {
     public synchronized void info(String message) {
         User currentUser = userService.getCurrentUser();
         UserDTO userDTO = userMapper.entityToDTO(currentUser);
-        LocalDateTime currentTime = LocalDateTime.now();
         Type listType = new TypeToken<List<InfoLog>>() {
         }.getType();
 
-        InfoLog infoLog = new InfoLog(userDTO, currentTime, message);
+        InfoLog infoLog = new InfoLog(userDTO, message);
         log(listType, infoLog, JSON_INFO_LOG);
-
     }
 
     @Override
     public synchronized void error(Throwable errorCause) {
         User currentUser = userService.getCurrentUser();
         UserDTO userDTO = userMapper.entityToDTO(currentUser);
-        LocalDateTime currentTime = LocalDateTime.now();
         Type listType = new TypeToken<List<ErrorLog>>() {
         }.getType();
 
-        ErrorLog errorLog = new ErrorLog(userDTO, currentTime, ExceptionUtils.getStackTrace(errorCause));
+        ErrorLog errorLog = new ErrorLog(userDTO, ExceptionUtils.getStackTrace(errorCause));
         log(listType, errorLog, JSON_ERROR_LOG);
     }
 
@@ -76,9 +73,7 @@ public class JsonLogger implements Logger {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        try {
-            FileWriter fileWriter = new FileWriter(filePath, false);
+        try (FileWriter fileWriter = new FileWriter(filePath, false)) {
             gson.toJson(logs, listType, fileWriter);
         } catch (IOException e) {
             error(e);

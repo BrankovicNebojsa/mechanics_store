@@ -1,10 +1,12 @@
 package com.mechanics_store.service;
 
+import com.mechanics_store.logging.Logger;
 import com.mechanics_store.model.Engine;
 import com.mechanics_store.repository.EngineRepository;
 import jakarta.persistence.EntityExistsException;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,17 +22,25 @@ public class EngineService {
 
     private final EngineRepository engineRepository;
 
-    public EngineService(EngineRepository engineRepository) {
+    private final Logger logger;
+
+    @Autowired
+    public EngineService(EngineRepository engineRepository, Logger logger) {
         this.engineRepository = engineRepository;
+        this.logger = logger;
     }
 
     public Engine save(Engine engine) {
         Optional<Engine> engineFromDB = engineRepository.findByNumberOfCylindersAndPowerAndCapacity(engine.getNumberOfCylinders(),
                 engine.getPower(), engine.getCapacity());
         if (engineFromDB == null || engineFromDB.isEmpty()) {
-            return engineRepository.save(engine);
+            Engine engine2 = engineRepository.save(engine);
+            logger.info("Saved an engine: " + engine2.toString());
+            return engine2;
         } else {
-            throw new EntityExistsException("Engine with that data already exists");
+            EntityExistsException e = new EntityExistsException("Engine with that data already exists");
+            logger.error(e);
+            throw e;
         }
     }
 

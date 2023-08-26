@@ -26,7 +26,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity(name = "user")
 public class User implements UserDetails {
 
@@ -100,4 +99,12 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "id: " + this.id + ", firstName: " + this.firstName + ", lastName: " + this.lastName +
+                ", email: " + this.email + ", phoneNumber: " + this.phoneNumber + ", username: " + this.username +
+                ", password: " + this.password + ", role: " + this.role.toString() + '}';
+    }
+
 }

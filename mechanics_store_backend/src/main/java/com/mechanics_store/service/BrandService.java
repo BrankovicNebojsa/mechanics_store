@@ -1,10 +1,12 @@
 package com.mechanics_store.service;
 
 import com.mechanics_store.exception.EntityAlreadyExistsException;
+import com.mechanics_store.logging.Logger;
 import com.mechanics_store.model.Brand;
 import com.mechanics_store.repository.BrandRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,16 +22,24 @@ public class BrandService {
 
     private final BrandRepository brandRepository;
 
-    public BrandService(BrandRepository brandRepository) {
+    private final Logger logger;
+
+    @Autowired
+    public BrandService(BrandRepository brandRepository, Logger logger) {
         this.brandRepository = brandRepository;
+        this.logger = logger;
     }
 
     public Brand save(Brand brand) {
         Optional<Brand> brandFromDB = brandRepository.findByName(brand.getName());
         if (brandFromDB == null || brandFromDB.isEmpty()) {
-            return brandRepository.save(brand);
+            Brand brand2 = brandRepository.save(brand);
+            logger.info("Saved a brand: " + brand2.toString());
+            return brand2;
         } else {
-            throw new EntityAlreadyExistsException("Brand with that name already exists");
+            EntityAlreadyExistsException e = new EntityAlreadyExistsException("Brand with that name already exists");
+            logger.error(e);
+            throw e;
         }
     }
 
@@ -53,7 +63,12 @@ public class BrandService {
     public boolean delete(Long id) {
         Optional<Brand> optionalBrand = brandRepository.findById(id);
         if (optionalBrand.isPresent()) {
-            brandRepository.deleteById(id);
+            try {
+                brandRepository.deleteById(id);
+            } catch (Exception e) {
+                logger.equals(e);
+                throw e;
+            }
             return true;
         }
         return false;

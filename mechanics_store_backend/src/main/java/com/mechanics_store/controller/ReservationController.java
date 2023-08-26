@@ -26,29 +26,29 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    private final ReservationMapper reservatopmMapper;
+    private final ReservationMapper reservationMapper;
 
     private final UserService userService;
 
     @Autowired
     public ReservationController(ReservationService reservationService, ReservationMapper reservatopmMapper, UserService userService) {
         this.reservationService = reservationService;
-        this.reservatopmMapper = reservatopmMapper;
+        this.reservationMapper = reservatopmMapper;
         this.userService = userService;
     }
 
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getAllReservations() {
         if (userService.isCurrentUserAWorker()) {
-            return ResponseEntity.ok(reservatopmMapper.entitiesToDTOs(reservationService.findAll()));
+            return ResponseEntity.ok(reservationMapper.entitiesToDTOs(reservationService.findAll()));
         } else {
-            return ResponseEntity.ok(reservatopmMapper.entitiesToDTOs(reservationService.findReservationsOfOwner(userService.getCurrentUser())));
+            return ResponseEntity.ok(reservationMapper.entitiesToDTOs(reservationService.findReservationsOfOwner(userService.getCurrentUser())));
         }
     }
 
     @PostMapping
     public ResponseEntity<ReservationDTO> saveReservations(@RequestBody ReservationDTO reservationDTO) {
-        return new ResponseEntity<>(reservatopmMapper.entityToDTO(reservationService.save(reservatopmMapper.DTOToEntity(reservationDTO))), HttpStatus.CREATED);
+        return new ResponseEntity<>(reservationMapper.entityToDTO(reservationService.save(reservationMapper.DTOToEntity(reservationDTO))), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/api/v1/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/users").hasAuthority("WORKER")
-                .requestMatchers(HttpMethod.GET, "/api/v1/users/current").hasAuthority("WORKER")
+                .requestMatchers(HttpMethod.GET, "/api/v1/users/current").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/users/mechanics").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/brands/**").hasAnyAuthority("CLIENT", "WORKER")
                 .requestMatchers(HttpMethod.GET, "/api/v1/models/**").hasAnyAuthority("CLIENT", "WORKER")

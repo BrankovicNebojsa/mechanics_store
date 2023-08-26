@@ -15,7 +15,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Represents entity in database called car.
@@ -28,7 +27,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity(name = "reservation")
 public class Reservation {
 
@@ -56,5 +54,12 @@ public class Reservation {
     public void setMechanic(User mechanic) {
         this.mechanic = mechanic;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" + "id: " + this.id + ", date: " + this.date + ", car {" + this.car + "}, mechanic {" + this.mechanic + "}}";
+    }
+    
+    
     
 }

@@ -1,11 +1,13 @@
 package com.mechanics_store.service;
 
 import com.mechanics_store.exception.EntityAlreadyExistsException;
+import com.mechanics_store.logging.Logger;
 import com.mechanics_store.model.Brand;
 import com.mechanics_store.model.Model;
 import com.mechanics_store.repository.ModelRepository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,9 +25,13 @@ public class ModelService {
 
     private final BrandService brandService;
 
-    public ModelService(ModelRepository modelRepository, BrandService brandService) {
+    private final Logger logger;
+
+    @Autowired
+    public ModelService(ModelRepository modelRepository, BrandService brandService, Logger logger) {
         this.modelRepository = modelRepository;
         this.brandService = brandService;
+        this.logger = logger;
     }
 
     public Model save(Model model) {
@@ -38,9 +44,13 @@ public class ModelService {
         }
         Optional<Model> modelFromDB = modelRepository.findByNameAndBrandId(model.getName(), model.getBrand().getId());
         if (modelFromDB == null || modelFromDB.isEmpty()) {
-            return modelRepository.save(model);
+            Model model2 = modelRepository.save(model);
+            logger.info("Saved a model: " + model2.toString());
+            return model2;
         } else {
-            throw new EntityAlreadyExistsException("Model with that name already exists");
+            EntityAlreadyExistsException e = new EntityAlreadyExistsException("Model with that name already exists");
+            logger.error(e);
+            throw e;
         }
 
     }

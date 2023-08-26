@@ -12,7 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * Represents entity in database called engine.
@@ -25,7 +24,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Entity(name = "engine")
 public class Engine {
 
@@ -47,6 +45,11 @@ public class Engine {
         this.numberOfCylinders = numberOfCylinders;
         this.power = power;
         this.capacity = capacity;
+    }
+
+    @Override
+    public String toString() {
+        return "Engine{" + "id: " + this.id + ", numberOfCylinders:" + this.numberOfCylinders + ", power:" + this.power + ", capacity:" + this.capacity + '}';
     }
 
 }
