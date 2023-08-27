@@ -1,11 +1,14 @@
 package com.mechanics_store.controller;
 
 import com.mechanics_store.controller.dto.EngineDTO;
+import com.mechanics_store.controller.dto.PriceDTO;
 import com.mechanics_store.controller.mapper.EngineMapper;
+import com.mechanics_store.controller.mapper.PriceMapper;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.mechanics_store.service.EngineService;
+import com.mechanics_store.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,32 +23,32 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author Nebojsa Brankovic
  */
 @RestController
-@RequestMapping("/api/v1/engines")
-public class EngineController {
+@RequestMapping("/api/v1/prices")
+public class PriceController {
 
-    private final EngineService engineService;
+    private final PriceService priceService;
 
-    private final EngineMapper engineMapper;
+    private final PriceMapper priceMapper;
 
     @Autowired
-    public EngineController(EngineService engineService, EngineMapper engineMapper) {
-        this.engineService = engineService;
-        this.engineMapper = engineMapper;
+    public PriceController(PriceService priceService, PriceMapper priceMapper) {
+        this.priceService = priceService;
+        this.priceMapper = priceMapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<EngineDTO>> getAllEngines() {
-        return ResponseEntity.ok(engineMapper.entitiesToDTOs(engineService.findAll()));
+    public ResponseEntity<List<PriceDTO>> getAllPrices() {
+        return ResponseEntity.ok(priceMapper.entitiesToDTOs(priceService.findAll()));
     }
 
     @PostMapping("")
-    public ResponseEntity<EngineDTO> saveEngine(@RequestBody EngineDTO engineDTO) {
-        return new ResponseEntity<>(engineMapper.entityToDTO(engineService.save(engineMapper.DTOToEntity(engineDTO))), HttpStatus.CREATED);
+    public ResponseEntity<PriceDTO> savePrice(@RequestBody PriceDTO priceDTO) {
+        return new ResponseEntity<>(priceMapper.entityToDTO(priceService.save(priceMapper.DTOToEntity(priceDTO))), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEngine(@PathVariable Long id) {
-        if (engineService.delete(id)) {
+    public ResponseEntity<Void> deletePrice(@PathVariable Long id) {
+        if (priceService.delete(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
