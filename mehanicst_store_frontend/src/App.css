@@ -1,0 +1,97 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.SideBar2 {
+  width: 16%;
+  padding-left: 20px;
+  border-color: rgba(174, 25, 25, 0.907);
+  border-width: 10px;
+}
+
+.CenterComponent {
+  width: 80%;
+  height: 100%;
+  padding-left: 5%;
+  padding-top: 5%;
+}
+
+.Page {
+  display: inline;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.NavBar {
+  width: 100%;
+  height: fit-content;
+  display: inline-block;
+}
+
+#navbarSupportedContent {
+  padding-top: 0%;
+  padding-left: 5%;
+}
+
+.navbar-logo {
+  padding-right: 5%;
+}
+
+nav {
+  display: flex;
+}
+
+.TopNavBar {
+  display: flex;
+}
+
+.Main {
+  display: flex;
+  height: 100vh;
+}
+
+.Login {
+  width: 50%;
+  height: 50%;
+  margin-left: 20%;
+}
+
+#slika {
+  padding-left: 1cm;
+  width: 192px;
+  height: 90px;
+}
