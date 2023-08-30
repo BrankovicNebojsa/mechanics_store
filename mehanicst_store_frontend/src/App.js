@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import TopNavbar from './components/Navbar';
 import Home from './components/Home';
@@ -14,6 +13,14 @@ import ShowEngines from './components/ShowEngines';
 import AddEngine from './components/AddEngine';
 import DeleteEngine from './components/DeleteEngine';
 import Profile from './components/Profile';
+import ShowCars from './components/ShowCars';
+import AddCar from './components/AddCar';
+import DeleteCar from './components/DeleteCar';
+import ShowReservations from './components/ShowReservations';
+import AddReservation from './components/AddReservation';
+import DeleteReservation from './components/DeleteReservation';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PriceCatalog from './components/PriceCatalog';
 
 
 
@@ -33,6 +40,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/prices" element={<PriceCatalog />} />
 
             <Route path="/brands" element={<ShowBrands />} />
               <Route path="/brands/add" element={<AddBrand />} />
@@ -45,6 +53,17 @@ function App() {
               <Route path="/engines" element={<ShowEngines />} />
               <Route path="/engines/add" element={<AddEngine />} />
               <Route path="/engines/delete" element={<DeleteEngine />} /> 
+
+              <Route path="/cars" element={<ShowCars />} />
+              <Route path="/cars/add" element={<AddCar />} />
+              <Route path="/cars/delete" element={<DeleteCar />} />
+
+              <Route path="/reservations" element={<ShowReservations />} />
+              <Route path="/reservations/add" element={<AddReservation />} />
+              <Route
+                path="/reservations/delete"
+                element={<DeleteReservation />}
+              />
 
           </Routes>
         </div>

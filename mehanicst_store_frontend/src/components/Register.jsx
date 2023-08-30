@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import urlBase from "../App";
 import axios from "axios";
 
-
 function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,7 +14,6 @@ function Register() {
 
   const handleChangeFirstName = (event) => {
     setFirstName(event.target.value);
-    
   };
 
   const handleChangeLastName = (event) => {
